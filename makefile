@@ -124,11 +124,14 @@ travis-run:
 	# For example: py.test
 	#########
 
-	# Kill all redis nodes and do cleanup
-	make stop
+	
 
 travis-install:
 	[ ! -e redis-git ] && git clone https://github.com/antirez/redis.git redis-git || true
 	make -C redis-git -j4
 	gem install redis
 	sleep 3
+
+travis-stop:
+	# Kill all redis nodes and do cleanup
+	make stop
