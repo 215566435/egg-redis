@@ -5,8 +5,10 @@ node_js:
   - '9'
 install:
   - npm i npminstall && npminstall
+  - make travis-install
 script:
   - npm run ci
+  - make travis-run
 after_script:
   - npminstall codecov && codecov
 services:
