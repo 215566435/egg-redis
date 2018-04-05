@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    redis_master:
+        image: redis:4.0.9-alpine
+        ports:
+            - 6379:6379
+
+    redis_slave:
+        image: redis:4.0.9-alpine
+        ports:
+            - 6380:6379
+
+    sentinel:
+        build: .
+        image: redis-sentinel
+        environment:
+            - MASTER_NAME=mymaster
+            - QUORUM=1
+            - MASTER=redis_master
+            - SLAVES=redis_slave
+        depends_on:
+            - redis_master
+        ports:
+            - 26379:26379
